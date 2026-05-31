@@ -1,8 +1,8 @@
 
 class Boss {
-  final int id;
+  final String id;
   final String name;
-  final String image;
+  final String? image;
   final String description;
   final String location;
   final List<String> drops;

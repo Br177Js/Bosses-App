@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BossCard extends StatelessWidget {
-  final int id;
+  final String id;
   final String name;
   final String location;
   final bool defeated;
@@ -20,6 +20,7 @@ class BossCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      color: Colors.black,
       child: ListTile(
         onTap: onTap,
         leading: Checkbox(
@@ -42,7 +43,7 @@ class BossCard extends StatelessWidget {
           style: TextStyle(
               color: defeated
                   ? Colors.grey
-                  : Colors.black
+                  : Colors.yellowAccent
           ),
         ),
         trailing: Icon(Icons.density_medium_sharp),

@@ -32,6 +32,14 @@ class BossLocalDatabase {
     }
   }
 
+  static Future<void> updateBoss(Boss boss) async {
+    await _box.put(boss.id, boss.toMap());
+  }
+
+  static Future<void> deleteAllBosses() async {
+    await _box.clear();
+  }
+
   static bool isEmpty() {
     return _box.isEmpty;
   }

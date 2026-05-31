@@ -18,8 +18,8 @@ class BossApiService {
             image: enemy["image"],
             description: enemy["description"],
             location: enemy["location"],
-            drops: enemy["drops"],
-            defeated: enemy["defeated"],
+            drops: List<String>.from(enemy["drops"]),
+            defeated: false,
         );
       }).toList();
     } else {
