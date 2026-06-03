@@ -225,11 +225,103 @@ class _BossListScreenState extends State<BossListScreen> {
                     await BossLocalDatabase.updateBoss(updatedBoss);
                     setState(() {});
                   },
+                  onTap: () async {
+                    final Boss? value = await Navigator.push(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => BossDetailScreen(boss: boss,),
+                        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                          final offsetAnimation = Tween<Offset>(
+                            begin: Offset(1.0, 0.0),
+                            end: Offset.zero,
+                          ).animate(animation);
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        }
+                      )
+                    );
+                  },
                 ),
               );
             },
           );
         }
+    );
+  }
+}
+
+class BossDetailScreen extends StatelessWidget {
+  final Boss boss;
+  BossDetailScreen({super.key, required this.boss});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black12,
+      appBar: AppBar(
+        backgroundColor: Colors.black12,
+        title: Text(
+          boss.name,
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.yellowAccent,
+          ),
+        ),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 8),
+            boss.image != null && boss.image!.isNotEmpty
+                ? Image.network(boss.image!)
+                : const Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
+            SizedBox(height: 10),
+            Text(
+              "Opis: ${boss.description}",
+              style: TextStyle(
+                color: Colors.yellowAccent,
+                fontSize: 20,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Lokalizacja: ${boss.location}",
+              style: TextStyle(
+                color: Colors.yellowAccent,
+                fontSize: 20,
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "Pozostawia:",
+              style: TextStyle(
+                color: Colors.yellowAccent,
+                fontSize: 20,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: boss.drops.length,
+                itemBuilder: (context, index) {
+                  final item = boss.drops[index];
+                  return ListTile(
+                    title: Text(
+                      item,
+                      style: TextStyle(
+                          color: Colors.yellowAccent
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
